@@ -69,16 +69,12 @@ getUpdates
     -> Maybe Int -- ^ timeout
     -> Manager
     -> IO (Either ServantError UpdatesResponse)
-getUpdates token offset limit timeout = runClient (getUpdatesM' request) token
+getUpdates token offset limit timeout = runClient (getUpdatesM request) token
     where request = GetUpdatesRequest offset limit timeout Nothing
 
--- | Get update with default parameters See 'getUpdate' for details.
-getUpdatesM :: TelegramClient UpdatesResponse
-getUpdatesM = getUpdatesM' getUpdatesRequest
-
 -- | See 'getUpdates'
-getUpdatesM' :: GetUpdatesRequest -> TelegramClient UpdatesResponse
-getUpdatesM' = run_ getUpdates_
+getUpdatesM :: GetUpdatesRequest -> TelegramClient UpdatesResponse
+getUpdatesM = run_ getUpdates_
 
 -- | Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized 'Update'. In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
 --
